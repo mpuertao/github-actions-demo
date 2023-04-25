@@ -1,6 +1,9 @@
 
 ### Java ###
 # Compiled class file
+
+.idea/
+.idea/*
 *.class
 
 # Log file
