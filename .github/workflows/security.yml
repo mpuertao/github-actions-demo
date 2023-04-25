@@ -39,11 +39,11 @@ jobs:
       name: Scan SCA with SNYK
       needs: sast
       runs-on: ubuntu-latest
-      continue-on-error: true
       steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@master
         - name: Run SNYK for check vulnerabilities
           uses: snyk/actions/gradle@master
+          continue-on-error: true
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     dast:
