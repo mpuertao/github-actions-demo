@@ -22,8 +22,8 @@ jobs:
             - name: Analyze with sonarcloud
               uses: sonarsource/sonarcloud-github-action@master
               env:
-                organization: xxx_xxx
-                project: xxx_xx
+                organization: mpuertao
+                project: mpuertao_github-actions-demo
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     sca:
