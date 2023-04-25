@@ -49,7 +49,7 @@ jobs:
         - name: Upload result to GitHub Code Scanning
           uses: github/codeql-action/upload-sarif@v2
           with:
-            sarif_file: report.sarif
+            sarif_file: report
     dast:
       name: Scan DAST with OWASP ZAP
       needs: sca
