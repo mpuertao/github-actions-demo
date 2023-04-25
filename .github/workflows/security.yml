@@ -1,0 +1,70 @@
+name: Pipeline SCA,SAST,DAST for DevSecOps
+run-name: ${{ github.actor }}  running this pipeline CI
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+    sast:
+        runs-on: ubuntu-latest
+        name: Scan SAST, UnitTest and CodeQuality 
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup jdk
+              uses: actions/setup-java@v3
+              with:
+                java-version: '17'
+                distribution: 'temurin'
+            - name: build gradle
+              run: ./gradlew build
+
+            - name: Analyze with sonarcloud
+              uses: sonarsource/sonarcloud-github-action@master
+              env:
+                organization: xxx_xxx
+                project: xxx_xx
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    sca:
+      name: Scan SCA with SNYK
+      needs: sast
+      runs-on: ubuntu-latest
+      continue-on-error: true
+      steps:
+        - uses: actions/checkout@v3
+        - name: Run SNYK for check vulnerabilities
+          uses: snyk/actions/gradle@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    dast:
+      name: Scan DAST with OWASP ZAP
+      needs: sca
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout
+          uses: actions/checkout@v3
+          with:
+            ref: main
+        - name: ZAP Scan
+          uses: zaproxy/action-api-scan@v0.1.1
+          #uses: zaproxy/action-baseline@v0.6.1
+          #uses: zaproxy/action-full-scan@v0.4.0
+          with:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            docker_name: 'owasp/zap2docker-stable'
+            format: openapi
+            #target: 'http://testphp.vulnweb.com/'
+            target: 'https://www.zaproxy.org/'
+            rules_file_name: '.zap/rules.tsv'
+            cmd_options: '-z "-config view.locale=es_ES"'
+
+
+
+
+        
+
+
+
+
+
