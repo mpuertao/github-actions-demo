@@ -3,7 +3,6 @@ package com.covid19.recovereds.controller;
 
 import com.covid19.recovereds.entity.Recovered;
 import com.covid19.recovereds.service.RecoveredService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +43,6 @@ public class RecoveredController {
     public ResponseEntity<Recovered> updateRecovered(@PathVariable("id") int id, @RequestBody Recovered recovered) {
         if (!recoveredService.existsById(recovered.getId()) || !recoveredService.existsById(id))
             return new ResponseEntity("Id no existe, favor validar", HttpStatus.NOT_FOUND);
-        if (StringUtils.isBlank(recovered.getName()) || recovered.getAge()==0)
-            return new ResponseEntity("El nombre o edad no puede ser vacio ó '0'", HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(recoveredService.updateRecovered(recovered), HttpStatus.OK);
     }
 
