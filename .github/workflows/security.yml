@@ -58,7 +58,7 @@ jobs:
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           with:
-            image: Dockerfile
+            image: maupuert/reto-appgate
     dast:
       name: Scan DAST with OWASP ZAP
       needs: sca
