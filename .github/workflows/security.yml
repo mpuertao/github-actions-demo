@@ -53,6 +53,7 @@ jobs:
     push_to_registry:
       name: Push Docker image to Docker Hub
       runs-on: ubuntu-latest
+      needs: sca
       steps:
         - name: Check out the repo
           uses: actions/checkout@v3
@@ -75,7 +76,7 @@ jobs:
             labels: ${{ steps.meta.outputs.labels }}
     scan-dockerfile:
       runs-on: ubuntu-latest
-      needs: sast
+      needs: push_to_registry
       steps:
         - name: Run Snyk to check Docker image for vulnerabilities
           uses: snyk/actions/docker@master
@@ -86,7 +87,7 @@ jobs:
             image: maupuert/api-demo
     dast:
       name: Scan DAST with OWASP ZAP
-      needs: [sca, scan-dockerfile]
+      needs: scan-dockerfile
       runs-on: ubuntu-latest
       steps:
         - name: checkout
