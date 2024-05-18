@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recovered
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: recovered
+  template:
+    metadata:
+      labels:
+        app: recovered
+    spec:
+      containers:
+        - name: recovered
+          image: maupuert/recovered:latest
+          ports:
+            - containerPort: 9010
+#          env:
+#            - name: SPRING_PROFILES_ACTIVE
+#              value: "prod"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9010
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9010
+            initialDelaySeconds: 30
+            periodSeconds: 10

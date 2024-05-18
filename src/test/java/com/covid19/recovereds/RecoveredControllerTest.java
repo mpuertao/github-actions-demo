@@ -43,9 +43,9 @@ class RecoveredControllerTest {
     void givenRecoveredWhenFindAllThenResponseOk() throws Exception {
         //Arrange
         List<Recovered> recovereds = new ArrayList<>();
-        recovereds.add(new Recovered(1, "Manuela", 25));
-        recovereds.add(new Recovered(2, "Viviana", 28));
-        recovereds.add(new Recovered(3, "Danny Barrientos", 40));
+        recovereds.add(new Recovered(1, "Jonh Doe", 25));
+        recovereds.add(new Recovered(2, "Carl Cox", 28));
+        recovereds.add(new Recovered(3, "Isaac Patrick", 40));
 
         //Act
         when(recordService.retrieveAllrecovereds()).thenReturn(recovereds);
@@ -61,9 +61,9 @@ class RecoveredControllerTest {
     @Test
     @DisplayName("Prueba q nos permite validar respuesta ok por recuperado por id")
     void givenRecoveredWhenFindByIdThenResponseOk() throws Exception {
-        Recovered recovered = new Recovered(4, "Lina", 28);
-        when(recordService.retrieveRecoveredById(4)).thenReturn(recovered);
-        mockMvc.perform(get("/recovered/{id}", 4)
+        Recovered recovered = new Recovered(20, "Lina", 28);
+        when(recordService.retrieveRecoveredById(30)).thenReturn(recovered);
+        mockMvc.perform(get("/recovered/{id}", 30)
                 .contentType("application/json"))
                 .andExpect(status().isOk())
                 .andDo(print());
