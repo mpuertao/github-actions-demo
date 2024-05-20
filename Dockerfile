@@ -15,7 +15,7 @@ FROM openjdk:11-jre-slim
 EXPOSE 9010
 RUN mkdir /app
 COPY --from=build /app/src/build/libs/*.jar /app/app.jar
-ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseContainerSupport", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
 
 
 
