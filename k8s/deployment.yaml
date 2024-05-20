@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: recovered-test
+  name: recovered
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: recovered-test
+      app: recovered
   template:
     metadata:
       labels:
-        app: recovered-test
+        app: recovered
     spec:
       containers:
-        - name: recovered-test
+        - name: recovered
           image: maupuert/recovered:latest
           ports:
             - containerPort: 9010
